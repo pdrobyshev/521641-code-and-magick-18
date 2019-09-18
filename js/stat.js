@@ -51,15 +51,12 @@ var getMaxElement = function (arr) {
   return Math.max.apply(null, arr);
 };
 
-var renderPlayerName = function (ctx, namesArray, i) {
+var renderPlayerBar = function (ctx, namesArray, timesArray, i, maxTime) {
+  ctx.fillStyle = colors.BLACK;
   ctx.fillText(namesArray[i], MIN_OFFSET_X + OFFSET_X * i, cloudParams.HEIGHT);
-};
-
-var renderPlayerTime = function (ctx, timesArray, i, maxTime) {
   ctx.fillText(Math.round(timesArray[i]), MIN_OFFSET_X + OFFSET_X * i, (-barParams.HEIGHT * timesArray[i]) / maxTime + cloudParams.X + barParams.HEIGHT - GAP);
-};
 
-var renderPlayerBar = function (ctx, timesArray, i, maxTime) {
+  ctx.fillStyle = namesArray[i] === 'Вы' ? colors.MY_PLAYER : colors.getRandomHsl();
   ctx.fillRect(MIN_OFFSET_X + OFFSET_X * i, cloudParams.X + barParams.HEIGHT, barParams.WIDTH, (-barParams.HEIGHT * timesArray[i]) / maxTime);
 };
 
@@ -72,12 +69,6 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillStyle = colors.BLACK;
-    renderPlayerName(ctx, names, i);
-    renderPlayerTime(ctx, times, i, maxTime);
-
-    ctx.fillStyle = names[i] === 'Вы' ? colors.MY_PLAYER : colors.getRandomHsl();
-
-    renderPlayerBar(ctx, times, i, maxTime);
+    renderPlayerBar(ctx, names, times, i, maxTime);
   }
 };
