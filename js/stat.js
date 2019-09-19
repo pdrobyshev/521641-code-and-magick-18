@@ -17,10 +17,7 @@ var colors = {
   BLACK: '#000000',
   WHITE: '#ffffff',
   SHADOW: 'rgba(0, 0, 0, 0.7)',
-  MY_PLAYER: 'rgba(255, 0, 0, 1)',
-  getRandomHsl: function () {
-    return 'hsl(200, ' + Math.floor(Math.random() * 100) + '%,  45%)';
-  }
+  MY_PLAYER: 'rgba(255, 0, 0, 1)'
 };
 
 var GAP = 10;
@@ -37,12 +34,6 @@ var renderCloud = function (ctx, x, y, color) {
 var renderWinnerText = function (ctx) {
   ctx.fillStyle = colors.BLACK;
   ctx.font = FONT_PARAMS;
-  /*
-    Как всё же лучше побороть магические числа?
-    Если бы использовал только GAP - пришлось бы умножать на 2, 3 или 5, как было до этого
-    Ввёл TEXT_GAP - грубо говоря высота текста(хотя меня это уже смущает - высота текста, взятая из воздуха)
-    Вводить абстрактные переменыне вроде TITLE_GAP или любой другой, с разными значениями только ради пары мест в коде - тоже не очень
-  */
   ctx.fillText('Ура вы победили!', cloudParams.X + GAP * 2, cloudParams.Y + TEXT_GAP);
   ctx.fillText('Список результатов:', cloudParams.X + GAP * 2, cloudParams.Y + TEXT_GAP + GAP * 2);
 };
@@ -51,12 +42,16 @@ var getMaxElement = function (arr) {
   return Math.max.apply(null, arr);
 };
 
+var getRandomHsl = function () {
+  return 'hsl(200, ' + Math.floor(Math.random() * 100) + '%,  45%)';
+};
+
 var renderPlayerBar = function (ctx, namesArray, timesArray, i, maxTime) {
   ctx.fillStyle = colors.BLACK;
   ctx.fillText(namesArray[i], MIN_OFFSET_X + OFFSET_X * i, cloudParams.HEIGHT);
   ctx.fillText(Math.round(timesArray[i]), MIN_OFFSET_X + OFFSET_X * i, (-barParams.HEIGHT * timesArray[i]) / maxTime + cloudParams.X + barParams.HEIGHT - GAP);
 
-  ctx.fillStyle = namesArray[i] === 'Вы' ? colors.MY_PLAYER : colors.getRandomHsl();
+  ctx.fillStyle = namesArray[i] === 'Вы' ? colors.MY_PLAYER : getRandomHsl();
   ctx.fillRect(MIN_OFFSET_X + OFFSET_X * i, cloudParams.X + barParams.HEIGHT, barParams.WIDTH, (-barParams.HEIGHT * timesArray[i]) / maxTime);
 };
 
