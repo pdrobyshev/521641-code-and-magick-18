@@ -16,15 +16,19 @@ var getRandomArrayElement = function (arr) {
   return arr[randomIndex];
 };
 
-var generateWizardsArray = function () {
+var generateWizard = function () {
+  return {
+    name: getRandomArrayElement(WIZARDS_NAMES) + ' ' + getRandomArrayElement(WIZARDS_SURNAMES),
+    coatColor: getRandomArrayElement(COAT_COLORS),
+    eyesColors: getRandomArrayElement(EYES_COLORS)
+  };
+};
+
+var generateWizardsArray = function (amount) {
   var wizardsList = [];
 
-  for (var i = 0; i < WIZARDS_AMOUNT; i++) {
-    var wizard = {
-      name: getRandomArrayElement(WIZARDS_NAMES) + ' ' + getRandomArrayElement(WIZARDS_SURNAMES),
-      coatColor: getRandomArrayElement(COAT_COLORS),
-      eyesColors: getRandomArrayElement(EYES_COLORS)
-    };
+  for (var i = 0; i < amount; i++) {
+    var wizard = generateWizard();
 
     wizardsList.push(wizard);
   }
@@ -32,7 +36,7 @@ var generateWizardsArray = function () {
   return wizardsList;
 };
 
-var generateWizard = function (wizard) {
+var generateWizardParams = function (wizard) {
   var wizardElement = wizardTemplate.cloneNode(true);
 
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -46,7 +50,7 @@ var renderWizards = function () {
   var fragment = document.createDocumentFragment();
 
   wizards.forEach(function (wizard) {
-    fragment.appendChild(generateWizard(wizard));
+    fragment.appendChild(generateWizardParams(wizard));
   });
 
   similarWizardsList.appendChild(fragment);
@@ -54,7 +58,7 @@ var renderWizards = function () {
 
 setup.classList.remove('hidden');
 
-var wizards = generateWizardsArray();
+var wizards = generateWizardsArray(WIZARDS_AMOUNT);
 renderWizards();
 
 similarWizardsBlock.classList.remove('hidden');
