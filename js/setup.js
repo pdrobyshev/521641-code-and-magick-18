@@ -9,34 +9,28 @@ var WIZARDS_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', '�
 var WIZARDS_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARDS_AMOUNT = 4;
 
-var getRandomWizardData = function (arr) {
+var getRandomArrayElement = function (arr) {
   var randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
 };
 
-var wizards = [
-  {
-    name: getRandomWizardData(WIZARDS_NAMES) + ' ' + getRandomWizardData(WIZARDS_SURNAMES),
-    coatColor: getRandomWizardData(COAT_COLORS),
-    eyesColors: getRandomWizardData(EYES_COLORS)
-  },
-  {
-    name: getRandomWizardData(WIZARDS_NAMES) + ' ' + getRandomWizardData(WIZARDS_SURNAMES),
-    coatColor: getRandomWizardData(COAT_COLORS),
-    eyesColors: getRandomWizardData(EYES_COLORS)
-  },
-  {
-    name: getRandomWizardData(WIZARDS_NAMES) + ' ' + getRandomWizardData(WIZARDS_SURNAMES),
-    coatColor: getRandomWizardData(COAT_COLORS),
-    eyesColors: getRandomWizardData(EYES_COLORS)
-  },
-  {
-    name: getRandomWizardData(WIZARDS_NAMES) + ' ' + getRandomWizardData(WIZARDS_SURNAMES),
-    coatColor: getRandomWizardData(COAT_COLORS),
-    eyesColors: getRandomWizardData(EYES_COLORS)
+var generateWizardsArray = function () {
+  var wizardsList = [];
+
+  for (var i = 0; i < WIZARDS_AMOUNT; i++) {
+    var wizard = {
+      name: getRandomArrayElement(WIZARDS_NAMES) + ' ' + getRandomArrayElement(WIZARDS_SURNAMES),
+      coatColor: getRandomArrayElement(COAT_COLORS),
+      eyesColors: getRandomArrayElement(EYES_COLORS)
+    };
+
+    wizardsList.push(wizard);
   }
-];
+
+  return wizardsList;
+};
 
 var generateWizard = function (wizard) {
   var wizardElement = wizardTemplate.cloneNode(true);
@@ -51,15 +45,16 @@ var generateWizard = function (wizard) {
 var renderWizards = function () {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < wizards.length; i++) {
-    fragment.appendChild(generateWizard(wizards[i]));
-  }
+  wizards.forEach(function (wizard) {
+    fragment.appendChild(generateWizard(wizard));
+  });
 
   similarWizardsList.appendChild(fragment);
 };
 
 setup.classList.remove('hidden');
 
+var wizards = generateWizardsArray();
 renderWizards();
 
 similarWizardsBlock.classList.remove('hidden');
