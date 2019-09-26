@@ -1,13 +1,17 @@
 'use strict';
 
-var WIZARDS_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var WIZARDS_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARDS_AMOUNT = 4;
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+var wizardParams = {
+  NAMES: ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
+  SURNAMES: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
+  COAT_COLORS: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
+  FIREBALL_COLORS: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'],
+  EYES_COLORS: ['black', 'red', 'blue', 'yellow', 'green']
+};
+var keycodes = {
+  ESC: 27,
+  ENTER: 13
+};
 
 var setup = document.querySelector('.setup');
 var similarWizardsBlock = setup.querySelector('.setup-similar');
@@ -30,9 +34,9 @@ var getRandomArrayElement = function (arr) {
 
 var generateWizard = function () {
   return {
-    name: getRandomArrayElement(WIZARDS_NAMES) + ' ' + getRandomArrayElement(WIZARDS_SURNAMES),
-    coatColor: getRandomArrayElement(COAT_COLORS),
-    eyesColors: getRandomArrayElement(EYES_COLORS)
+    name: getRandomArrayElement(wizardParams.NAMES) + ' ' + getRandomArrayElement(wizardParams.SURNAMES),
+    coatColor: getRandomArrayElement(wizardParams.COAT_COLORS),
+    eyesColors: getRandomArrayElement(wizardParams.EYES_COLORS)
   };
 };
 
@@ -74,7 +78,7 @@ renderWizards();
 similarWizardsBlock.classList.remove('hidden');
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE && document.activeElement !== setupUserName) {
+  if (evt.keyCode === keycodes.ESC && document.activeElement !== setupUserName) {
     closePopup();
   }
 };
@@ -91,44 +95,40 @@ var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
   wizardCoat.removeEventListener('click', changeWizardCoatColor);
-  wizardEyes.addEventListener('click', changeWizardEyesColor);
-  wizardFireball.addEventListener('click', changeWizardFireballColor);
+  wizardEyes.removeEventListener('click', changeWizardEyesColor);
+  wizardFireball.removeEventListener('click', changeWizardFireballColor);
 };
 
 var changeWizardCoatColor = function () {
-  var randomCoatColor = getRandomArrayElement(COAT_COLORS);
+  var randomCoatColor = getRandomArrayElement(wizardParams.COAT_COLORS);
   wizardCoat.style.fill = randomCoatColor;
   wizardCoatHiddenInput.value = randomCoatColor;
 };
 
 var changeWizardEyesColor = function () {
-  var randomEyesColor = getRandomArrayElement(EYES_COLORS);
+  var randomEyesColor = getRandomArrayElement(wizardParams.EYES_COLORS);
   wizardEyes.style.fill = randomEyesColor;
   wizardEyesHiddenInput.value = randomEyesColor;
 };
 
 var changeWizardFireballColor = function () {
-  var randomFireballColor = getRandomArrayElement(FIREBALL_COLORS);
+  var randomFireballColor = getRandomArrayElement(wizardParams.FIREBALL_COLORS);
   wizardFireball.style.backgroundColor = randomFireballColor;
   wizardFireballHiddenInput.value = randomFireballColor;
 };
 
-setupOpen.addEventListener('click', function () {
-  openPopup();
-});
+setupOpen.addEventListener('click', openPopup);
 
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === keycodes.ENTER) {
     openPopup();
   }
 });
 
-setupClose.addEventListener('click', function () {
-  closePopup();
-});
+setupClose.addEventListener('click', closePopup);
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === keycodes.ENTER) {
     closePopup();
   }
 });
