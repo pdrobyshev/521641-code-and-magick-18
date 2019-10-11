@@ -14,23 +14,12 @@
   var similarWizardsBlock = setup.querySelector('.setup-similar');
   var similarWizardsList = setup.querySelector('.setup-similar-list');
   var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
-  var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
-  var wizardFireball = setup.querySelector('.setup-fireball-wrap');
-  var wizardCoatHiddenInput = setup.querySelector('input[name="coat-color"]');
-  var wizardEyesHiddenInput = setup.querySelector('input[name="eyes-color"]');
-  var wizardFireballHiddenInput = setup.querySelector('input[name="fireball-color"]');
-
-  var getRandomArrayElement = function (arr) {
-    var randomIndex = Math.floor(Math.random() * arr.length);
-    return arr[randomIndex];
-  };
 
   var generateWizard = function () {
     return {
-      name: getRandomArrayElement(wizardParams.NAMES) + ' ' + getRandomArrayElement(wizardParams.SURNAMES),
-      coatColor: getRandomArrayElement(wizardParams.COAT_COLORS),
-      eyesColors: getRandomArrayElement(wizardParams.EYES_COLORS)
+      name: window.util.getRandomArrayElement(wizardParams.NAMES) + ' ' + window.util.getRandomArrayElement(wizardParams.SURNAMES),
+      coatColor: window.util.getRandomArrayElement(wizardParams.COAT_COLORS),
+      eyesColors: window.util.getRandomArrayElement(wizardParams.EYES_COLORS)
     };
   };
 
@@ -72,31 +61,8 @@
 
   similarWizardsBlock.classList.remove('hidden');
 
-  var changeWizardCoatColor = function () {
-    var randomCoatColor = getRandomArrayElement(wizardParams.COAT_COLORS);
-    wizardCoat.style.fill = randomCoatColor;
-    wizardCoatHiddenInput.value = randomCoatColor;
-  };
-
-  var changeWizardEyesColor = function () {
-    var randomEyesColor = getRandomArrayElement(wizardParams.EYES_COLORS);
-    wizardEyes.style.fill = randomEyesColor;
-    wizardEyesHiddenInput.value = randomEyesColor;
-  };
-
-  var changeWizardFireballColor = function () {
-    var randomFireballColor = getRandomArrayElement(wizardParams.FIREBALL_COLORS);
-    wizardFireball.style.backgroundColor = randomFireballColor;
-    wizardFireballHiddenInput.value = randomFireballColor;
-  };
-
   window.setup = {
     setup: setup,
-    wizardCoat: wizardCoat,
-    wizardEyes: wizardEyes,
-    wizardFireball: wizardFireball,
-    changeWizardCoatColor: changeWizardCoatColor,
-    changeWizardEyesColor: changeWizardEyesColor,
-    changeWizardFireballColor: changeWizardFireballColor
+    wizardParams: wizardParams
   };
 })();

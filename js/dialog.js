@@ -1,54 +1,78 @@
 'use strict';
 
 (function () {
+  var setupInitialCoords = {
+    x: '50%',
+    y: '80px'
+  };
   var setupOpen = document.querySelector('.setup-open');
   var setup = window.setup.setup;
   var setupClose = setup.querySelector('.setup-close');
   var setupUserName = setup.querySelector('.setup-user-name');
   var dialogHandler = setup.querySelector('.upload');
-  var setupInitialCoords = {
-    x: '50%',
-    y: '80px'
-  };
+  var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+  var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
+  var wizardFireball = setup.querySelector('.setup-fireball-wrap');
+  var wizardCoatHiddenInput = setup.querySelector('input[name="coat-color"]');
+  var wizardEyesHiddenInput = setup.querySelector('input[name="eyes-color"]');
+  var wizardFireballHiddenInput = setup.querySelector('input[name="fireball-color"]');
 
   var setInitialSetupPosition = function () {
     setup.style.left = setupInitialCoords.x;
     setup.style.top = setupInitialCoords.y;
   };
 
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === window.util.ESC && document.activeElement !== setupUserName) {
-      closePopup();
+  var escPressPopupHandler = function (evt) {
+    if (document.activeElement !== setupUserName) {
+      window.util.isEscEvent(evt, closePopupHandler);
     }
   };
 
-  var openPopup = function () {
+  var openPopupHandler = function () {
     setup.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
-    window.setup.wizardCoat.addEventListener('click', window.setup.changeWizardCoatColor);
-    window.setup.wizardEyes.addEventListener('click', window.setup.changeWizardEyesColor);
-    window.setup.wizardFireball.addEventListener('click', window.setup.changeWizardFireballColor);
+    document.addEventListener('keydown', escPressPopupHandler);
+    wizardCoat.addEventListener('click', coatColorClickHandler);
+    wizardEyes.addEventListener('click', eyesColorClickHandler);
+    wizardFireball.addEventListener('click', fireballColorClickHandler);
   };
 
-  var closePopup = function () {
+  var closePopupHandler = function () {
     setup.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
-    window.setup.wizardCoat.removeEventListener('click', window.setup.changeWizardCoatColor);
-    window.setup.wizardEyes.removeEventListener('click', window.setup.changeWizardEyesColor);
-    window.setup.wizardFireball.removeEventListener('click', window.setup.changeWizardFireballColor);
+    document.removeEventListener('keydown', escPressPopupHandler);
+    wizardCoat.removeEventListener('click', coatColorClickHandler);
+    wizardEyes.removeEventListener('click', eyesColorClickHandler);
+    wizardFireball.removeEventListener('click', fireballColorClickHandler);
     setInitialSetupPosition();
   };
 
-  setupOpen.addEventListener('click', openPopup);
+  var coatColorClickHandler = function () {
+    var randomCoatColor = window.util.getRandomArrayElement(window.setup.wizardParams.COAT_COLORS);
+    wizardCoat.style.fill = randomCoatColor;
+    wizardCoatHiddenInput.value = randomCoatColor;
+  };
+
+  var eyesColorClickHandler = function () {
+    var randomEyesColor = window.util.getRandomArrayElement(window.setup.wizardParams.EYES_COLORS);
+    wizardEyes.style.fill = randomEyesColor;
+    wizardEyesHiddenInput.value = randomEyesColor;
+  };
+
+  var fireballColorClickHandler = function () {
+    var randomFireballColor = window.util.getRandomArrayElement(window.setup.wizardParams.FIREBALL_COLORS);
+    wizardFireball.style.backgroundColor = randomFireballColor;
+    wizardFireballHiddenInput.value = randomFireballColor;
+  };
+
+  setupOpen.addEventListener('click', openPopupHandler);
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopup);
+    window.util.isEnterEvent(evt, openPopupHandler);
   });
 
-  setupClose.addEventListener('click', closePopup);
+  setupClose.addEventListener('click', closePopupHandler);
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEscEvent(evt, closePopup);
+    window.util.isEscEvent(evt, closePopupHandler);
   });
 
   dialogHandler.addEventListener('mousedown', function (evt) {

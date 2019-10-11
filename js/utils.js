@@ -7,8 +7,6 @@
   };
 
   window.util = {
-    ESC: keyCodes.ESC,
-    ENTER: keyCodes.ENTER,
     isEscEvent: function (evt, action) {
       if (evt.keyCode === keyCodes.ESC) {
         action();
@@ -18,6 +16,10 @@
       if (evt.keyCode === keyCodes.ENTER) {
         action();
       }
+    },
+    getRandomArrayElement: function (arr) {
+      var randomIndex = Math.floor(Math.random() * arr.length);
+      return arr[randomIndex];
     }
   };
 })();
