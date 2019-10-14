@@ -6,7 +6,7 @@
     ENTER: 13
   };
 
-  window.util = {
+  window.utils = {
     isEscEvent: function (evt, action) {
       if (evt.keyCode === keyCodes.ESC) {
         action();

@@ -6,7 +6,7 @@
     y: '80px'
   };
   var setupOpen = document.querySelector('.setup-open');
-  var setup = window.setup.setup;
+  var setup = document.querySelector('.setup');
   var setupClose = setup.querySelector('.setup-close');
   var setupUserName = setup.querySelector('.setup-user-name');
   var dialogHandler = setup.querySelector('.upload');
@@ -24,7 +24,7 @@
 
   var escPressPopupHandler = function (evt) {
     if (document.activeElement !== setupUserName) {
-      window.util.isEscEvent(evt, closePopupHandler);
+      window.utils.isEscEvent(evt, closePopupHandler);
     }
   };
 
@@ -46,19 +46,19 @@
   };
 
   var coatColorClickHandler = function () {
-    var randomCoatColor = window.util.getRandomArrayElement(window.setup.wizardParams.COAT_COLORS);
+    var randomCoatColor = window.utils.getRandomArrayElement(window.wizard.params.COAT_COLORS);
     wizardCoat.style.fill = randomCoatColor;
     wizardCoatHiddenInput.value = randomCoatColor;
   };
 
   var eyesColorClickHandler = function () {
-    var randomEyesColor = window.util.getRandomArrayElement(window.setup.wizardParams.EYES_COLORS);
+    var randomEyesColor = window.utils.getRandomArrayElement(window.wizard.params.EYES_COLORS);
     wizardEyes.style.fill = randomEyesColor;
     wizardEyesHiddenInput.value = randomEyesColor;
   };
 
   var fireballColorClickHandler = function () {
-    var randomFireballColor = window.util.getRandomArrayElement(window.setup.wizardParams.FIREBALL_COLORS);
+    var randomFireballColor = window.utils.getRandomArrayElement(window.wizard.params.FIREBALL_COLORS);
     wizardFireball.style.backgroundColor = randomFireballColor;
     wizardFireballHiddenInput.value = randomFireballColor;
   };
@@ -66,13 +66,13 @@
   setupOpen.addEventListener('click', openPopupHandler);
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopupHandler);
+    window.utils.isEnterEvent(evt, openPopupHandler);
   });
 
   setupClose.addEventListener('click', closePopupHandler);
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEscEvent(evt, closePopupHandler);
+    window.utils.isEscEvent(evt, closePopupHandler);
   });
 
   dialogHandler.addEventListener('mousedown', function (evt) {
