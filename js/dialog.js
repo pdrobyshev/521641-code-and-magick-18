@@ -5,8 +5,17 @@
     x: '50%',
     y: '80px'
   };
+  var wizardParams = {
+    NAMES: ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
+    SURNAMES: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
+    COAT_COLORS: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
+    FIREBALL_COLORS: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'],
+    EYES_COLORS: ['black', 'red', 'blue', 'yellow', 'green']
+  };
+
   var setupOpen = document.querySelector('.setup-open');
   var setup = document.querySelector('.setup');
+  var form = setup.querySelector('.setup-wizard-form');
   var setupClose = setup.querySelector('.setup-close');
   var setupUserName = setup.querySelector('.setup-user-name');
   var dialogHandler = setup.querySelector('.upload');
@@ -46,21 +55,28 @@
   };
 
   var coatColorClickHandler = function () {
-    var randomCoatColor = window.utils.getRandomArrayElement(window.wizard.params.COAT_COLORS);
+    var randomCoatColor = window.utils.getRandomArrayElement(wizardParams.COAT_COLORS);
     wizardCoat.style.fill = randomCoatColor;
     wizardCoatHiddenInput.value = randomCoatColor;
   };
 
   var eyesColorClickHandler = function () {
-    var randomEyesColor = window.utils.getRandomArrayElement(window.wizard.params.EYES_COLORS);
+    var randomEyesColor = window.utils.getRandomArrayElement(wizardParams.EYES_COLORS);
     wizardEyes.style.fill = randomEyesColor;
     wizardEyesHiddenInput.value = randomEyesColor;
   };
 
   var fireballColorClickHandler = function () {
-    var randomFireballColor = window.utils.getRandomArrayElement(window.wizard.params.FIREBALL_COLORS);
+    var randomFireballColor = window.utils.getRandomArrayElement(wizardParams.FIREBALL_COLORS);
     wizardFireball.style.backgroundColor = randomFireballColor;
     wizardFireballHiddenInput.value = randomFireballColor;
+  };
+
+  var saveFormData = function (evt) {
+    window.backend.save(new FormData(form), function () {
+      setup.classList.add('hidden');
+    });
+    evt.preventDefault();
   };
 
   setupOpen.addEventListener('click', openPopupHandler);
@@ -121,4 +137,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  setup.addEventListener('submit', saveFormData, window.utils.errorHandler);
 })();
