@@ -54,16 +54,26 @@
     setInitialSetupPosition();
   };
 
+  var onCoatChange = function (color) {
+    return color;
+  };
+
+  var onEyesChange = function (color) {
+    return color;
+  };
+
   var coatColorClickHandler = function () {
     var randomCoatColor = window.utils.getRandomArrayElement(wizardParams.COAT_COLORS);
     wizardCoat.style.fill = randomCoatColor;
     wizardCoatHiddenInput.value = randomCoatColor;
+    window.dialog.onCoatChange(randomCoatColor);
   };
 
   var eyesColorClickHandler = function () {
     var randomEyesColor = window.utils.getRandomArrayElement(wizardParams.EYES_COLORS);
     wizardEyes.style.fill = randomEyesColor;
     wizardEyesHiddenInput.value = randomEyesColor;
+    window.dialog.onEyesChange(randomEyesColor);
   };
 
   var fireballColorClickHandler = function () {
@@ -139,4 +149,9 @@
   });
 
   setup.addEventListener('submit', saveFormData, window.utils.errorHandler);
+
+  window.dialog = {
+    onCoatChange: onCoatChange,
+    onEyesChange: onEyesChange
+  };
 })();
