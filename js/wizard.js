@@ -2,8 +2,10 @@
 
 (function () {
   var WIZARDS_AMOUNT = 4;
+  var fragment = document.createDocumentFragment();
 
   var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var similarWizardsList = document.querySelector('.setup-similar-list');
 
   var generateWizardParams = function (wizard) {
     var wizardElement = wizardTemplate.cloneNode(true);
@@ -16,14 +18,13 @@
   };
 
   var renderWizards = function (wizards) {
-    var fragment = document.createDocumentFragment();
+    similarWizardsList.innerHTML = '';
 
     for (var i = 0; i < WIZARDS_AMOUNT; i++) {
-      var wizard = window.utils.getRandomArrayElement(wizards);
-      fragment.appendChild(generateWizardParams(wizard));
+      fragment.appendChild(generateWizardParams(wizards[i]));
     }
 
-    return fragment;
+    similarWizardsList.appendChild(fragment);
   };
 
   window.wizard = {
